@@ -1,38 +1,28 @@
 from kivy.app import App
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-from kivy.uix.button import Button
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.image import AsyncImage
+from kivy.uix.behaviors import ButtonBehavior
+
+from kivy.core.window import Window
+Window.clearcolor = (1, 1, 1, 1)
 
 
-class MyGrid(GridLayout):
-    def __init__(self,**kwargs):
-        super(MyGrid,self).__init__(**kwargs)
-        self.cols = 2
-        self.add_widget(Label(text="Name :"))
-        self.name = TextInput(multiline=False)
-        self.add_widget(self.name)
-
-        self.add_widget(Label(text="Last Name :"))
-        self.last_name = TextInput(multiline=False)
-        self.add_widget(self.last_name)
-
-        self.add_widget(Label(text="Email :"))
-        self.email = TextInput(multiline=False)
-        self.add_widget(self.email)
-
-        self.submit = Button(text = "Submit", font_size = 40)
-        self.submit.bind(on_press=self.pressed)
-        self.add_widget(self.submit)
+class ImageButton(ButtonBehavior, AsyncImage):
+    pass
 
 
-    def pressed(self,instance):
-        print("Pressed")
+class MainWindow(BoxLayout):
+    def __init__(self, **kwargs):
+        super(MainWindow, self).__init__(**kwargs)
+        self.cols = 1
+        icon = 'https://cdn2.iconfinder.com/data/icons/flat-ui-icons-24-px/24/eye-24-256.png'
+        self.add_widget(ImageButton(source=icon))
 
-class MainApp(App):
+
+class Test(App):
     def build(self):
-        return MyGrid()
+        return MainWindow()
 
-if __name__ == '__main__':
-    app = MainApp()
-    app.run()
+
+if __name__ == "__main__":
+    Test().run()
